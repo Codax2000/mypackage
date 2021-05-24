@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Codax2000/mypackage/workflows/R-CMD-check/badge.svg)](https://github.com/Codax2000/mypackage/actions)
+[![codecov](https://codecov.io/gh/Codax2000/mypackage/branch/master/graph/badge.svg?token=93S218HZLT)](https://codecov.io/gh/Codax2000/mypackage)
 <!-- badges: end -->
 
 The goal of mypackage is to ...
