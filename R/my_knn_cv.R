@@ -31,9 +31,9 @@ my_knn_cv <- function(train, cl, k_nn, k_cv) {
     cl_test <- cl[is_test]
     cl_train <- cl[is_train]
     # record prediction to get misclassification rate
-    class <- knn(fold_train, fold_test, cl = cl_train, k = k_nn)
+    class <- class::knn(fold_train, fold_test, cl = cl_train, k = k_nn)
     mc_rate[i] <- mean(class != cl_test)
   }
   return(list("cv_error" = mean(mc_rate),
-              "class" = knn(train, train, cl, k = k_nn)))
+              "class" = class::knn(train, train, cl, k = k_nn)))
 }

@@ -15,13 +15,3 @@ You can install the released version of mypackage from [CRAN](https://CRAN.R-pro
 ``` r
 devtools::install_github("Codax2000/mypackage")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(mypackage)
-## basic example code
-```
-

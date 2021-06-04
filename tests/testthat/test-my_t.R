@@ -1,5 +1,21 @@
-test_that("returns correct objects", {
-  result <- my_t.test(my_penguins$bill_depth_mm, "two.sided", 15)
-  expect_is(result, list)
+test_that("two sided works", {
+  local_penguins <- na.omit(my_penguins)
+  result <- my_t.test(local_penguins$bill_depth_mm, "two.sided", 15)
   expect_equal(result$alternative, "two.sided")
+  expect_true(result$test_stat - 20.06112 < 0.001)
+  expect_equal(result$df, 332)
+})
+test_that("less than works", {
+  local_penguins <- na.omit(my_penguins)
+  result <- my_t.test(local_penguins$bill_depth_mm, "less", 15)
+  expect_equal(result$alternative, "less")
+  expect_true(result$test_stat - 20.06112 < 0.001)
+  expect_equal(result$df, 332)
+})
+test_that("greater than works", {
+  local_penguins <- na.omit(my_penguins)
+  result <- my_t.test(local_penguins$bill_depth_mm, "greater", 15)
+  expect_equal(result$alternative, "greater")
+  expect_true(result$test_stat - 20.06112 < 0.001)
+  expect_equal(result$df, 332)
 })

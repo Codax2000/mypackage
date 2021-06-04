@@ -21,7 +21,7 @@ my_lm <- function(data, formula) {
   beta <- solve(t(x) %*% x) %*% t(x) %*% y
   df <- dim(data)[1] - length(beta)
   sigma_squared <- sum((y - x %*% beta) * (y - x %*% beta) / df)
-  beta_error <- diag(sqrt(sigma_squared * solve(t(x) %*% x)))
+  beta_error <- sqrt(diag(sigma_squared * solve(t(x) %*% x)))
   t <- beta / (beta_error)
   p_vals <- 2 * pt(abs(t), df, lower.tail = FALSE)
   result <- data.frame(
