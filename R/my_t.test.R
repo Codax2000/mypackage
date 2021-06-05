@@ -6,7 +6,7 @@
 #' @param alternative a character string specifying the alternative hypothesis,
 #' must be one of "two.sided", "greater", or "less"
 #' @param mu the null hypothesis value of the mean
-#' @keywords test
+#' @keywords inference
 #'
 #' @return List with entries for the t-statistic, the degrees of freedom,
 #' the alternative hypothesis, and the p-value of the test

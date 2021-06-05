@@ -26,4 +26,4 @@ my_t.test(c(1, 2, 1.5, 3, 2.1), "two.sided", 2)
 my_t.test(c(3, 1, -2, -1, 0, -1), "less", 0)
 
 }
-\keyword{test}
+\keyword{inference}

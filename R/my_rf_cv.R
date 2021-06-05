@@ -4,7 +4,7 @@
 #' the bill depth, and the flipper length. It is not generalizeable.
 #'
 #' @param k the number of folds to use in cross-validation
-#' @keywords forest
+#' @keywords inference
 #'
 #' @return the average mse of the model across all folds
 #'

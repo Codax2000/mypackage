@@ -28,5 +28,4 @@ subset <- my_gapminder[c("year", "lifeExp", "pop")]
 my_knn_cv(subset, my_gapminder["gdpPercap"], 2, 5)
 
 }
-\keyword{learning}
-\keyword{machine}
+\keyword{prediction}

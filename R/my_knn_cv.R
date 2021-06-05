@@ -7,7 +7,7 @@
 #' @param cl a numeric vector indicating the true result
 #' @param k_nn the number of nearest neighbors to use when training the model
 #' @param k_cv the number of folds to use when performing cross-validation
-#' @keywords machine learning
+#' @keywords prediction
 #'
 #' @return a list with the predicted values of cl and the mean squared error
 #' of the cross-validation testing

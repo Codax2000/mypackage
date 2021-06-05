@@ -24,4 +24,4 @@ data(my_gapminder)
 my_lm(my_gapminder, lifeExp ~ pop + gdpPercap)
 
 }
-\keyword{regression}
+\keyword{prediction}

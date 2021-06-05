@@ -5,7 +5,7 @@
 #' @param data a data frame with named columns
 #' @param formula a formula object specifying which columns of the data frame
 #' to use in the model
-#' @keywords regression
+#' @keywords prediction
 #'
 #' @return table with the coefficients, standard errors, t values, and p values
 #' of each term in the coefficient.

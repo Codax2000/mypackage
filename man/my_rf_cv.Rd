@@ -21,4 +21,4 @@ my_rf_cv(3)
 my_rf_cv(5)
 
 }
-\keyword{forest}
+\keyword{inference}

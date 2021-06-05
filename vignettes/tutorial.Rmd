@@ -15,6 +15,79 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## Introduction
+
+This is a package that holds several useful functions for statistical
+inference and prediction, including a one-sample t test, a linear regression,
+a random forest function for penguins data, and a cross-validation function.
+
+To install and load the package from GitHub, use the following code:
+```{r eval = FALSE}
+devtools::install_github("Codax2000/mypackage")
 library(mypackage)
 ```
+
+```{r echo = FALSE}
+library(mypackage)
+```
+
+## my_t.test
+`my_t.test` is a function that performs a one-sample t test on a set of given
+data. It accepts alternative hypotheses and a value for mu, the null parameter.
+It returns a `list` with values of the p value, the alternative hypothesis,
+the t statistic, and the degrees of freedom of the data.
+
+For example, to test the hypotheses $$H_0: \mu=60$$ $$H_a: \mu \neq 60$$ on the
+`lifeExp` column of the `my_gapminder` data, use the following code:
+```{r}
+local_gapminder = na.omit(my_gapminder)
+result <- my_t.test(local_gapminder$lifeExp, alternative = "two.sided", mu = 60)
+print(result)
+```
+Since the p-value of the data is `r round(result$p_val, 3)`, this test indicates
+that, at $\alpha=0.05$, there is no evidence that the true mean
+life expectancy of the gapminder data is not equal to 60.
+
+To test the hypotheses $$H_0: \mu=60$$ $$H_a: \mu \lt 60$$ on the
+`lifeExp` column of the `my_gapminder` data, use the following code:
+```{r}
+local_gapminder = na.omit(my_gapminder)
+result <- my_t.test(local_gapminder$lifeExp, alternative = "less", mu = 60)
+print(result)
+```
+Since the p-value of the data is `r round(result$p_val, 3)`, this test indicates
+that, at $\alpha=0.05$, there is evidence that the true mean
+life expectancy of the gapminder data is less than 60.
+
+And finally, to test the hypotheses that $$H_0: \mu=60$$ $$H_a: \mu \gt 60$$
+```{r}
+local_gapminder = na.omit(my_gapminder)
+result <- my_t.test(local_gapminder$lifeExp, alternative = "greater", mu = 60)
+print(result)
+```
+Since the p-value of the data is `r round(result$p_val, 3)`, this test indicates
+that, at $\alpha=0.05$, there is no evidence that the true mean
+life expectancy of the gapminder data is greater than 60.
+
+## my_lm
+`my_lm` is a function that fits a linear model to a data set. It takes a data
+set and a formula as a parameter and returns a
+matrix with the coefficients of each predictor, the t statistic for each one,
+the standard error of each coefficient, and the p value of each one, which
+tells the significance of that coefficient.
+
+For example, we
+can fit a model to the `gapminder` data to try and predict life expectancy from
+gdp per capita and the continent.
+
+To fit the model, use the following:
+``` {r}
+local_gapminder <- na.omit(my_gapminder)
+result <- my_lm(local_gapminder, lifeExp ~ gdpPercap + continent)
+print(result)
+```
+
+the coefficient for `gdpPercap` is `r round(result[2, 1], 4)`. This indicates
+that, if `continent` is kept constant, an increase of 1 in `gdpPercap` will
+mean an increase of `r round(result[2, 1], 4)` years in life
+expectancy.
