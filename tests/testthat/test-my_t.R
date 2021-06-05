@@ -19,3 +19,10 @@ test_that("greater than works", {
   expect_true(result$test_stat - 20.06112 < 0.001)
   expect_equal(result$df, 332)
 })
+test_that("passing larger sample mean with two-sided works", {
+  local_penguins <- na.omit(my_penguins)
+  result <- my_t.test(local_penguins$bill_depth_mm, "two.sided", 18)
+  expect_equal(result$alternative, "two.sided")
+  expect_equal(result$df, 332)
+  expect_true(result$test_stat + 7.739 < 0.01)
+})
