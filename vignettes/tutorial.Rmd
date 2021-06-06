@@ -91,3 +91,89 @@ the coefficient for `gdpPercap` is `r round(result[2, 1], 4)`. This indicates
 that, if `continent` is kept constant, an increase of 1 in `gdpPercap` will
 mean an increase of `r round(result[2, 1], 4)` years in life
 expectancy.
+
+This model can then be used for prediction. To do this, use the coefficients
+from the result of `my_lm` to make predicted values. For example, we can do this
+with the previous model:
+
+TODO finish plotting fitted and actual values
+
+## my_knn_cv
+`my_knn_cv` takes four parameters: `train`, a data frame with the training
+columns; `cl`, which represents the actual response variables; `k_nn`, the
+number of nearest neighbors to use in the model; and `k_cv`, which is the
+number of folds to use for cross-validation.
+
+For example, we can try to predict the species of a penguin using the bill
+length, bill depth, flipper length, and the body mass. We will use 5-fold
+cross validation.
+
+```{r}
+library(class) ##include knn for my_knn_cv
+library(randomForest)
+local_penguins <- na.omit(my_penguins)
+actual <- local_penguins$species
+prediction_values <- local_penguins[c("bill_length_mm", "bill_depth_mm",
+                                  "body_mass_g", "flipper_length_mm")]
+results <- matrix(nrow = 10, ncol = 3)
+colnames(results) <- c("Nearest Neighbors", "Training Error", "CV Misclassification")
+
+for (i in 1:10) {
+  result <- my_knn_cv(prediction_values, actual, i, 5)
+  results[i, 1] <- i
+  results[i, 2] <- mean(actual != result$class)
+  results[i, 3] <- result$cv_error
+}
+as.table(results)
+```
+The function cross-validates the K-nearest neighbors model by splitting
+the training data randomly into 5 folds, then trains the model on the data not
+in a particular fold and testing on the data in the fold. This allows all of the
+data to be used in training the model while also making sure there is still a
+testing data set.
+
+Since both the CV misclassification and the training error is lower with `knn=1`
+, the best model to use would have 1 nearest neighbor.
+
+## my_rf_cv
+`my_rf_cv` is a function that takes in a parameter of the number of folds to
+use in cross-validation. It then attempts to predict the body mass of penguins
+from the bill length, bill depth, and flipper length.
+
+We can examine the effect of the cv parameter thus:
+```{r}
+library(ggplot2)
+k <- c(2, 5, 10)
+result <- matrix(nrow = 90, ncol = 2)
+colnames(result) <- c("n_folds", "cv_error")
+for (i in 1:3) {
+  for (j in 1:30) {
+    result[(30) * (i - 1) + j, 1] <- k[i]
+    result[(30) * (i - 1) + j, 2] <- my_rf_cv(k[i])
+  }
+}
+
+result <- as.data.frame(result)
+ggplot(result, aes(x=n_folds, y=cv_error, 
+                   group = n_folds)) + geom_boxplot() + labs(title = 
+                          "Random Forest with 5-fold Cross validation",
+                          x = "Number of folds", y = "Mean Squared CV Error")
+result_stats <- matrix(nrow = 3, ncol = 2)
+colnames(result_stats) <- c("mean", "standard deviation")
+rownames(result_stats) <- c("k = 2", "k = 5", "k = 10")
+for (i in 1:3) {
+  results_of_specific_k <- result[result$n_folds == k[i], 2]
+  result_stats[i, 1] <- mean(results_of_specific_k)
+  result_stats[i, 2] <- sd(results_of_specific_k)
+}
+result_stats <- (as.table(result_stats))
+result_stats
+```
+
+It's clear that, as the number of folds increases, both the mean squared error
+and the standard deviation of the squared error decrease. This makes sense,
+since as there are more folds, the model has more training data to work with,
+and can get a better grasp on the data itself. Therefore, its predictions
+would be better. There are also fewer predictions, so the mean squared error
+should be smaller with a smaller number of people as well.
+
