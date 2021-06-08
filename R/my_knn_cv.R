@@ -14,8 +14,8 @@
 #'
 #' @examples
 #' subset <- my_gapminder[c("year", "lifeExp", "pop")]
-#' my_knn_cv(subset, my_gapminder["gdpPercap"], 2, 5)
-#'
+#' resp <- my_gapminder %>% dplyr::pull(gdpPercap)
+#' my_knn_cv(subset, resp, 2, 5)
 #' @export
 my_knn_cv <- function(train, cl, k_nn, k_cv) {
   # assign fold variable that assigns observations to folds

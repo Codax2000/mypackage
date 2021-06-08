@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' data(my_gapminder)
-#' my_lm(my_gapminder, lifeExp ~ pop + gdpPercap)
+#' my_lm(my_gapminder, lifeExp ~ gdpPercap)
 #'
 #' @export
 my_lm <- function(data, formula) {

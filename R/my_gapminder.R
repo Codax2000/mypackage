@@ -23,6 +23,7 @@
 #' @seealso \code{\link[gapminder]{country_colors}} for a nice color scheme for the countries
 #' @importFrom tibble tibble
 #' @examples
+#' gapminder <- my_gapminder
 #' str(gapminder)
 #' head(gapminder)
 #' summary(gapminder)

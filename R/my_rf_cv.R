@@ -25,9 +25,7 @@ my_rf_cv <- function(k) {
     fold_test <- local_penguins[is_test, ]
     fold_train <- local_penguins[is_train, ]
     # record prediction to get misclassification rate
-    model <- randomForest::randomForest(body_mass_g ~ bill_length_mm +
-                            bill_depth_mm + flipper_length_mm,
-                            data = fold_train, ntree = 100)
+    model <- randomForest::randomForest(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = fold_train, ntree = 100)
     predictions <- predict(model, fold_test)
     fold_mse[i] <- mean((predictions - fold_test$body_mass_g)^2)
   }

@@ -25,7 +25,7 @@ k-fold cross validation.
 }
 \examples{
 subset <- my_gapminder[c("year", "lifeExp", "pop")]
-my_knn_cv(subset, my_gapminder["gdpPercap"], 2, 5)
-
+resp <- my_gapminder \%>\% dplyr::pull(gdpPercap)
+my_knn_cv(subset, resp, 2, 5)
 }
 \keyword{prediction}

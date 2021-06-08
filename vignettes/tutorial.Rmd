@@ -86,7 +86,14 @@ local_gapminder <- na.omit(my_gapminder)
 result <- my_lm(local_gapminder, lifeExp ~ gdpPercap + continent)
 print(result)
 ```
+```{r}
+# TODO
+#beta <- output[,”Estimates”]
+#X <- model.matrix(FORMULA, DATA)
+#X %*% beta
+# tmp <- data.frame(“Fitted” = fitted,  “Actual” = mygapminder$lifeExp)
 
+```
 the coefficient for `gdpPercap` is `r round(result[2, 1], 4)`. This indicates
 that, if `continent` is kept constant, an increase of 1 in `gdpPercap` will
 mean an increase of `r round(result[2, 1], 4)` years in life
