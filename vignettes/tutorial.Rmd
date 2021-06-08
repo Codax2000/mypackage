@@ -1,5 +1,5 @@
 ---
-title: "Project 3: Tutorial"
+title: "Tutorial"
 author: "Alexander Knowlton"
 output: rmarkdown::html_vignette
 vignette: >
@@ -86,24 +86,41 @@ local_gapminder <- na.omit(my_gapminder)
 result <- my_lm(local_gapminder, lifeExp ~ gdpPercap + continent)
 print(result)
 ```
-```{r}
-# TODO
-#beta <- output[,”Estimates”]
-#X <- model.matrix(FORMULA, DATA)
-#X %*% beta
-# tmp <- data.frame(“Fitted” = fitted,  “Actual” = mygapminder$lifeExp)
 
-```
 the coefficient for `gdpPercap` is `r round(result[2, 1], 4)`. This indicates
 that, if `continent` is kept constant, an increase of 1 in `gdpPercap` will
 mean an increase of `r round(result[2, 1], 4)` years in life
 expectancy.
 
+The null and alternative hypotheses of the `gdpPercap` coefficient is:
+$$H_0: \beta = 0$$
+$$H_a: \beta \neq 0$$
+
+The p-value is `r round(result[2, 4], 3)`. Such a small p-value indicates that
+if the actual value of $\beta$ was 0, there would be a miniscule chance of
+getting the observed $\beta$ by accident. Therefore, we can reject the null
+hypothesis in favor of the alternative hypothesis, indicating that `gdpPercap`
+is useful in the model.
+
 This model can then be used for prediction. To do this, use the coefficients
 from the result of `my_lm` to make predicted values. For example, we can do this
-with the previous model:
+with the previous model, using `model.matrix` to get the predicted values,
+given the coefficients from the model. We can also plot the fitted values
+against the actual values to see how accurate the model is.
 
-TODO finish plotting fitted and actual values
+```{r}
+beta <- result[, 1]
+X <- model.matrix(lifeExp ~ gdpPercap + continent, local_gapminder)
+fitted <- X %*% beta
+tmp <- data.frame("Fitted" = fitted,  "Actual" = my_gapminder$lifeExp,
+                  "Continent" = my_gapminder$continent)
+ggplot2::ggplot(tmp, ggplot2::aes(x = Fitted, y = Actual, 
+                                  color = Continent)) + ggplot2::geom_point()
+```
+
+This plot indicates that, depending on the continent, the model's accuracy
+changes. For example, the actual and fitted values bear little resemblance
+in Africa, but appear to be more linearly correlated in Europe.
 
 ## my_knn_cv
 `my_knn_cv` takes four parameters: `train`, a data frame with the training
